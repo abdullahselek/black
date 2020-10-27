@@ -4,9 +4,9 @@ cache:
   directories:
     - $HOME/.cache/pre-commit
 env:
-  - TEST_CMD="tox -e py"
+  - TEST_CMD="coverage run -m unittest"
 install:
-  - pip install coverage coveralls pre-commit tox
+  - pip install coverage coveralls pre-commit
   - pip install -e '.[d]'
 script:
   - $TEST_CMD
@@ -29,6 +29,8 @@ matrix:
       python: 3.8
     - name: "3.9"
       python: 3.9
+  allow_failures:
+    - python: 3.9
 before_deploy:
   - pip install pyinstaller
   - pyinstaller --clean -F --add-data src/blib2to3/:blib2to3 src/black/__init__.py
